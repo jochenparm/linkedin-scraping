@@ -8,7 +8,7 @@ def scrape(company, depth=5, timeout=25, output="./"):
     scraper.loop.run_until_complete(scraper.run())
     print("\n\n[+] Number of employees identified: {}".format(len(scraper.employees)))
     with open(f"{output}/names.txt", "a") as f:
-        for name in scraper.employees:
+        for name in sorted(scraper.employees):
             f.write(f"{name}\n")
 
 
