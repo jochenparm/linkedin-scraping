@@ -3,6 +3,7 @@ from typing import List
 
 from scraper.scraper_pipeline import scrape_names
 from scraper.search_engines.engines import BingEngine
+from scraper.search_engines.engines import GoogleEngine
 from scraper.search_engines.engines import SearchEngineBase
 from scraper.search_engines.engines import YahooEngine
 
@@ -10,7 +11,7 @@ from scraper.search_engines.engines import YahooEngine
 class EmployeeScraper:
     loop = asyncio.get_event_loop()
     employees = set()
-    search_engines: List[SearchEngineBase] = [YahooEngine, BingEngine]
+    search_engines: List[SearchEngineBase] = [GoogleEngine, YahooEngine, BingEngine]
 
     def __init__(self, company, depth=5, timeout=25):
         self.company = company
