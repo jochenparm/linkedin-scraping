@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-
 import fire
-from scraper.scraper import Scraper
+from scraper.employee_scraper import EmployeeScraper
 
 
 def scrape(company, depth=5, timeout=25, output="./"):
-    scraper = Scraper(company, depth=depth, timeout=timeout)
+    scraper = EmployeeScraper(company, depth=depth, timeout=timeout)
     scraper.loop.run_until_complete(scraper.run())
-    print("\n\n[+] Names Found: %d" % len(scraper.employees))
-    print("[*] Writing names to the following directory: %s" % output)
-    with open("%s/names.txt" % (output), 'a') as f:
+    print("\n\n[+] Number of employees identified: {}".format(len(scraper.employees)))
+    with open(f"{output}/names.txt", "a") as f:
         for name in scraper.employees:
-            f.write("%s\n" % name)
+            f.write(f"{name}\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     fire.Fire(scrape)
