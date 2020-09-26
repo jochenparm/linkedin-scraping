@@ -4,7 +4,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from scraper.output_sanitation.sanitizers import sanitize
-from scraper.search_engines.engines import SearchEngineBase
+from scraper.search_engines.engines import SearchEngine
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0",
@@ -43,7 +43,7 @@ def extract_names(raw_content, html, employee_name_filter):
     return names
 
 
-def scrape_names(search_engine: SearchEngineBase, company, depth, timeout):
+def scrape_names(search_engine: SearchEngine, company, depth, timeout):
     names = []
     for index in range(depth):
         raw_content = get_raw_content(
