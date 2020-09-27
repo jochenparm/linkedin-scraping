@@ -8,6 +8,7 @@ from scraper.search_engines.engines import BingEngine
 from scraper.search_engines.engines import GoogleEngine
 from scraper.search_engines.engines import SearchEngine
 from scraper.search_engines.engines import YahooEngine
+from typeguard import typechecked
 
 
 class EmployeeScraper:
@@ -15,11 +16,13 @@ class EmployeeScraper:
     employees: Set = set()
     search_engines: List[SearchEngine] = [GoogleEngine, YahooEngine, BingEngine]
 
+    @typechecked
     def __init__(self, company: str, depth: int = 5, timeout: int = 25) -> None:
         self.company = company
         self.depth = depth
         self.timeout = timeout
 
+    @typechecked
     async def run(self) -> None:
         futures = [
             self.loop.run_in_executor(

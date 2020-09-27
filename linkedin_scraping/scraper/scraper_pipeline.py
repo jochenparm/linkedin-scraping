@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 from scraper.output_sanitation.sanitizers import sanitize
 from scraper.search_engines.engines import SearchEngine
+from typeguard import typechecked
 
 HEADERS: Dict = {
     "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0",
@@ -21,6 +22,7 @@ HEADERS: Dict = {
 }
 
 
+@typechecked
 def get_raw_content(
     url_template: str, company: str, index: int, timeout: int = 25
 ) -> str:
@@ -32,12 +34,14 @@ def get_raw_content(
     ).text
 
 
+@typechecked
 def filter_captcha(raw_content) -> None:
     if "solving the above CAPTCHA" not in raw_content:
         return
     raise ValueError("Captcha triggered, stopping execution")
 
 
+@typechecked
 def extract_names(
     raw_content: str, html: List[str], employee_name_filter: Callable
 ) -> List[str]:
@@ -50,6 +54,7 @@ def extract_names(
     return names
 
 
+@typechecked
 def scrape_names(
     search_engine: SearchEngine, company: str, depth: int, timeout: int
 ) -> List[str]:

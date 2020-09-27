@@ -2,6 +2,8 @@ import re
 from typing import Dict
 from typing import List
 
+from typeguard import typechecked
+
 ACCENTS: Dict = {
     "a": "[àáâãäå]",
     "e": "[èéêë]",
@@ -23,12 +25,14 @@ UNWANTED_TITLES: List[str] = [
 ]
 
 
+@typechecked
 def remove_accents(data: str) -> str:
     for k, v in ACCENTS.items():
         data = re.sub(f"{v}", k, data)
     return data
 
 
+@typechecked
 def remove_titles(data: str) -> str:
     for r in UNWANTED_TITLES:
         data = re.sub(r, "", data)
@@ -36,12 +40,14 @@ def remove_titles(data: str) -> str:
     return re.sub(r"\s+", " ", data)
 
 
+@typechecked
 def misc_filters(data: str) -> str:
     chr_map = re.compile("[^a-zA-Z -]")
     data = chr_map.sub("", data)
     return data.strip()
 
 
+@typechecked
 def sanitize(data: str) -> str:
     pipeline = [remove_accents, remove_titles, misc_filters]
     for job in pipeline:
