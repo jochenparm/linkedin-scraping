@@ -1,6 +1,8 @@
 import re
+from typing import Dict
+from typing import List
 
-ACCENTS = {
+ACCENTS: Dict = {
     "a": "[àáâãäå]",
     "e": "[èéêë]",
     "i": "[ìíîï]",
@@ -11,7 +13,7 @@ ACCENTS = {
     "ss": "[ß]",
 }
 
-UNWANTED_TITLES = [
+UNWANTED_TITLES: List[str] = [
     ",.*",
     r"\(.+?\)",
     r"(Mr\.|Mrs\.|Ms\.|Dr\.|Prof\.)",
@@ -21,26 +23,26 @@ UNWANTED_TITLES = [
 ]
 
 
-def remove_accents(data):
+def remove_accents(data: str) -> str:
     for k, v in ACCENTS.items():
         data = re.sub(f"{v}", k, data)
     return data
 
 
-def remove_titles(data):
+def remove_titles(data: str) -> str:
     for r in UNWANTED_TITLES:
         data = re.sub(r, "", data)
     data = re.sub(r"\.", " ", data)
     return re.sub(r"\s+", " ", data)
 
 
-def misc_filters(data):
+def misc_filters(data: str) -> str:
     chr_map = re.compile("[^a-zA-Z -]")
     data = chr_map.sub("", data)
     return data.strip()
 
 
-def sanitize(data):
+def sanitize(data: str) -> str:
     pipeline = [remove_accents, remove_titles, misc_filters]
     for job in pipeline:
         data = job(data)

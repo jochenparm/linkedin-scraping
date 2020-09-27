@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "linkedin-scraping"
+name = "linkedin_scraping"
 version = "0.1.0"
 description = ""
 authors = ["Jochen Parmentier <jochen.parmentier@external.atlascopco.com>"]
 packages = [
-    { include="linkedin-scraping", from="." },
+    { include="linkedin_scraping", from="." },
 ]
 
 [tool.poetry.dependencies]
