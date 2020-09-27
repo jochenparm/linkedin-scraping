@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import fire
 from scraper.employee_scraper import EmployeeScraper
+from typeguard import typechecked
 
 
-def scrape(company, depth=5, timeout=25, output="./"):
+@typechecked
+def scrape(company: str, depth: int = 5, timeout: int = 25, output: str = "./") -> None:
     scraper = EmployeeScraper(company, depth=depth, timeout=timeout)
     scraper.loop.run_until_complete(scraper.run())
     print("\n\n[+] Number of employees identified: {}".format(len(scraper.employees)))
